@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE } from './authTypes'
+import { FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE, LOGOUT } from './authTypes'
 
 
 export const fetchLoginRequest = () => {
@@ -22,6 +22,12 @@ export const fetchLoginFailure = (error) => {
     }
 }
 
+export const logout = () => {
+    return {
+        type: LOGOUT
+    }
+}
+
 export const fetchLogin = (loginData) => {
 
     const { login, password } = loginData
@@ -34,7 +40,6 @@ export const fetchLogin = (loginData) => {
             .then(response => {
                 const data = response.data
                 dispatch(fetchLoginSuccess(data))
-                // localStorage.setItem('token', data.jwt)
             })
             .catch(error => {
                 const errorMsg = error.response.data.message[0].messages[0].message

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import About from "./pages/About";
 import Home from "./pages/Home";
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
+import LogoutBtn from "./components/logoutBtn/LogoutBtn";
 
 
 
@@ -21,11 +22,9 @@ const App = () => {
     <AppCtx.Provider value={appState, setAppState}>
       <Provider store={store}>
         <Router>
+          <LogoutBtn />
           <Switch>
             <ProtectedRoute exact path='/about' component={About} />
-            {/* <Route path='/about'>
-            <About />
-          </Route> */}
             <Route path='/'>
               <Home />
             </Route>
