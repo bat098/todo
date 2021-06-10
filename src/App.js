@@ -5,22 +5,21 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import About from "./components/About";
-import Home from "./components/Home";
 import store from './redux/store'
 import { Provider } from 'react-redux'
+import About from "./pages/About";
+import Home from "./pages/Home";
+import Todo from './pages/Todo/Todo'
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
+import LogoutBtn from "./components/logoutBtn/LogoutBtn";
 
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Link to='/'>Home</Link>
-        <Link to='/about'>About</Link>
-
+        <LogoutBtn />
         <Switch>
-          <Route path='/about'>
-            <About />
-          </Route>
+          <ProtectedRoute exact path='/about' component={Todo} />
           <Route path='/'>
             <Home />
           </Route>

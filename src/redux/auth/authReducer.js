@@ -1,6 +1,7 @@
-import { FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE } from './authTypes'
+import { FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE, LOGOUT } from './authTypes'
 
 const initialState = {
+    isLogged: false,
     loading: false,
     data: [],
     error: ''
@@ -14,6 +15,7 @@ const authReducer = (state = initialState, action) => {
         }
         case FETCH_LOGIN_SUCCESS: return {
             ...state,
+            isLogged: true,
             loading: false,
             data: action.payload,
             error: ''
@@ -23,6 +25,13 @@ const authReducer = (state = initialState, action) => {
             loading: false,
             data: [],
             error: action.payload
+        }
+        case LOGOUT: return {
+            ...state,
+            isLogged: false,
+            loading: false,
+            data: [],
+            error: ''
         }
         default: return state
     }

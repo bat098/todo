@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE } from './authTypes'
+import { FETCH_LOGIN_REQUEST, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE, LOGOUT } from './authTypes'
+
 
 export const fetchLoginRequest = () => {
     return {
@@ -21,12 +22,20 @@ export const fetchLoginFailure = (error) => {
     }
 }
 
-export const fetchLogin = () => {
+export const logout = () => {
+    return {
+        type: LOGOUT
+    }
+}
+
+export const fetchLogin = (loginData) => {
+
+    const { login, password } = loginData
     return (dispatch) => {
         dispatch(fetchLoginRequest())
         axios.post('http://139.59.215.177/auth/local', {
-            identifier: "mateusz@mail.pl",
-            password: "qwe123qwe"
+            identifier: login,
+            password: password
         })
             .then(response => {
                 const data = response.data
