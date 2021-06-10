@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import About from "./components/About";
 import Home from "./components/Home";
+import store from './redux/store'
+import { Provider } from 'react-redux'
 
 const App = () => {
   return (
-    <div>
+    <Provider store={store}>
       <Router>
         <Link to='/'>Home</Link>
         <Link to='/about'>About</Link>
@@ -24,7 +26,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </div>
+    </Provider>
   )
 }
 
