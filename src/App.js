@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Todo from './pages/Todo/Todo'
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
 import LogoutBtn from "./components/logoutBtn/LogoutBtn";
+import TodoItemsDetails from './components/todoItemDetails/TodoItemsDetails'
 
 const App = () => {
   return (
@@ -19,10 +20,11 @@ const App = () => {
       <Router>
         <LogoutBtn />
         <Switch>
-          <ProtectedRoute exact path='/about' component={Todo} />
-          <Route path='/'>
+          <Route exact path='/'>
             <Home />
           </Route>
+          <ProtectedRoute exact path='/todo' component={Todo} />
+          <ProtectedRoute path='/todo/:id' component={TodoItemsDetails} />
         </Switch>
       </Router>
     </Provider>
