@@ -1,26 +1,28 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import TodoItem from '../../components/todoItem/TodoItem'
+import TodoItemAddForm from '../../components/todoItemAddForm/TodoItemAddForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchTasks } from '../../redux/task/taskActions'
 
 const Todo = () => {
-    const token = useSelector(state => state.auth.data.jwt)
-    const apiUrl = 'http://139.59.215.177/todos'
+    const dispatch = useDispatch()
 
-    const authAxios = axios.create({
-        baseURL: apiUrl,
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-
+    const tasks = useSelector(state => state.tasks.tasks)
     useEffect(() => {
-        authAxios.get()
-            .then(res => console.log(res.data))
-            .catch(err => err.data)
+        dispatch(fetchTasks())
     }, [])
+
+    const [showForm, setShowForm] = useState(false)
+
     return (
         <div>
-            todo
+            {
+                tasks.map(item => <TodoItem key={item.id} item={item} />)
+            }
+            <button onClick={() => setShowForm(prevState => !prevState)}>Add Item</button>
+            {
+                showForm && <TodoItemAddForm />
+            }
         </div>
     )
 }

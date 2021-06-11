@@ -33,7 +33,7 @@ const LoginForm = () => {
                 <input type="password" id="password" name="password" value={password} onChange={e => setLoginData({ ...loginData, password: e.target.value })}></input>
             </div>
             <button type='submit'>Login</button>
-            {isLogged && <Redirect to='/about' />}
+            {isLogged && <Redirect to='/todo' />}
         </form>
     )
 }

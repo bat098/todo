@@ -1,0 +1,19 @@
+.todoItem {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+}
+
+.btn {
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btnDetails {
+  background-color: #71deff;
+}
+
+.btnDelete {
+  background-color: #ff4141;
+}
