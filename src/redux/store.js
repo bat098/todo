@@ -4,13 +4,6 @@ import rootReducer from './rootReducer'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const saveToLocalStorage = (state) => {
-    // console.log(state)
-    // const newState = {
-    //     auth: {
-    //         isLogged: state.auth.isLogged,
-    //         jwt: state.auth.data.jwt
-    //     }
-    // }
     try {
         localStorage.setItem('state', JSON.stringify(state));
     } catch (e) {
