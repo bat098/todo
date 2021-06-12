@@ -1,0 +1,17 @@
+@import '../../golbalStyles.module.scss';
+.navbar {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $primaryBg;
+  padding: 20px;
+}
+
+.logo {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $primaryColor;
+}

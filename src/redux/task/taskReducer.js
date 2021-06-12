@@ -51,6 +51,7 @@ const tasksReducer = (state = initialState, action) => {
         }
         case DELETE_TASK_SUCCESS: return {
             ...state,
+
             tasks: state.tasks.filter(task => task.id !== action.payload.id)
         }
         case DELETE_TASK_FAILURE: return {

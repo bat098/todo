@@ -1,2 +1,63 @@
+@import '../../golbalStyles.module.scss';
+.details,
+.form {
+  background-color: $primaryBg;
+  padding: 30px;
+  border-radius: 30px;
+  font-size: 26px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.title,
+.description,
+.finished {
+  width: 100%;
+}
+
+.tag {
+  color: $successColor;
+}
+
+.btn {
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnEdit {
+  background-color: $primaryColor;
+  color: $secondaryColor;
+}
+
+.btnDelete {
+  background-color: $errorColor;
+  color: $secondaryColor;
+}
+
+.btnSave {
+  background-color: transparent;
+  border: 2px solid $primaryColor;
+  color: $primaryColor;
+}
+
+.label {
+  font-size: 26px;
+}
+.input {
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #4b4b4b;
 }

@@ -17,6 +17,7 @@ import {
 } from './taskTypes'
 import axios from 'axios'
 import store from '../store'
+import history from '../../helpers/history'
 
 
 export const fetchTasksRequest = () => {
@@ -168,8 +169,8 @@ export const deleteTask = (id) => {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => {
-                dispatch(deleteTaskSuccess(id))
-                dispatch(fetchTasks())
+                dispatch(deleteTaskSuccess(res.data))
+                history.push('/todo')
             })
             .catch(err => console.log(err.data))
     }
@@ -190,8 +191,6 @@ export const detailsTask = (id) => {
 }
 
 export const editTask = (id, editedTask) => {
-    console.log(id)
-    console.log(editedTask)
     return (dispatch) => {
         dispatch(editTaskRequest())
         const token = takeToken()
@@ -200,6 +199,7 @@ export const editTask = (id, editedTask) => {
         })
             .then(res => {
                 dispatch(editTaskSuccess(res.data))
+                history.push('/todo')
             })
             .catch(err => console.log(err.data))
     }

@@ -1,11 +1,22 @@
+@import '../../golbalStyles.module.scss';
 .todoItem {
   display: flex;
-  width: 300px;
+  width: 400px;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  max-width: 200px;
+  width: 100%;
 }
 
 .btn {
   border-radius: 10px;
+  padding: 10px;
+  font-weight: bold;
+  color: $secondaryColor;
   border: none;
   cursor: pointer;
 }

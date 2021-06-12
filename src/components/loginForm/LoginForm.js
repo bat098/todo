@@ -5,34 +5,44 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const initialLogin = {
-    login: 'mateusz@mail.pl',
+    email: 'mateusz@mail.pl',
     password: 'qwe123qwe'
 }
 
 const LoginForm = () => {
     const dispatch = useDispatch()
     const isLogged = useSelector(state => state.auth.isLogged)
-    const [loginData, setLoginData] = useState(initialLogin)
-    const { login, password } = loginData
+    const error = useSelector(state => state.auth.error)
+    const [form, setForm] = useState(initialLogin)
+    const { email, password } = form
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchLogin(loginData))
+        dispatch(fetchLogin(form))
     }
 
 
 
     return (
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+                <label className={styles.label} htmlFor="email">Email</label>
+                <input className={styles.input} placeholder='Enter your adress email' type="text" id="email" name="email" value={email} onChange={handleChange} />
 
-        <form onSubmit={handleSubmit}>
-            <div className={styles.formControl}>
-                <label htmlFor="email">Login</label>
-                <input type="text" id="email" name="email" value={login} onChange={e => setLoginData({ ...loginData, login: e.target.value })} ></input>
             </div>
-            <div className={styles.formControl}>
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" name="password" value={password} onChange={e => setLoginData({ ...loginData, password: e.target.value })}></input>
+            <div className={styles.formGroup}>
+                <label className={styles.label} htmlFor="password">Password</label>
+                <input className={styles.input} placeholder='Enter your password' type="password" id="password" name="password" value={password} onChange={handleChange} />
             </div>
-            <button type='submit'>Login</button>
+            {error && <p className={styles.error}>{error}</p>}
+            <button className={styles.btn} type='submit'>Login</button>
             {isLogged && <Redirect to='/todo' />}
         </form>
     )
