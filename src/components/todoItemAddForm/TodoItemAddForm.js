@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './TodoItemAddForm.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addTask } from '../../redux/task/taskActions'
 import { v4 as uuid } from 'uuid';
 

@@ -123,14 +123,11 @@ export const editTaskFailure = (error) => {
     }
 }
 
-
-
 const apiUrl = 'http://139.59.215.177/todos'
 
 const takeToken = () => {
     return store.getState().auth.data.jwt
 }
-
 
 
 export const fetchTasks = () => {
@@ -141,7 +138,7 @@ export const fetchTasks = () => {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => dispatch(fetchTasksSuccess(res.data)))
-            .catch(err => console.log(err.data))
+            .catch(err => dispatch(fetchTasksFailure(err)))
     }
 }
 
@@ -157,7 +154,7 @@ export const addTask = (task) => {
                 dispatch(addTaskSuccess(task))
                 dispatch(fetchTasks())
             })
-            .catch(err => console.log(err.data))
+            .catch(err => dispatch(addTaskFailure(err)))
     }
 }
 
@@ -172,7 +169,7 @@ export const deleteTask = (id) => {
                 dispatch(deleteTaskSuccess(res.data))
                 history.push('/todo')
             })
-            .catch(err => console.log(err.data))
+            .catch(err => dispatch(deleteTaskFailure(err)))
     }
 }
 
@@ -186,7 +183,7 @@ export const detailsTask = (id) => {
             .then(res => {
                 dispatch(detailsTaskSuccess(res.data))
             })
-            .catch(err => console.log(err.data))
+            .catch(err => dispatch(detailsTaskFailure(err)))
     }
 }
 
@@ -201,7 +198,7 @@ export const editTask = (id, editedTask) => {
                 dispatch(editTaskSuccess(res.data))
                 history.push('/todo')
             })
-            .catch(err => console.log(err.data))
+            .catch(err => dispatch(editTaskFailure(err)))
     }
 }
 
