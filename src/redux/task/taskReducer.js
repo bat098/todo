@@ -10,9 +10,11 @@ import {
     DELETE_TASK_FAILURE,
     DETAILS_TASK_REQUEST,
     DETAILS_TASK_SUCCESS,
-    DETAILS_TASK_FAILURE
+    DETAILS_TASK_FAILURE,
+    EDIT_TASK_REQUEST,
+    EDIT_TASK_SUCCESS,
+    EDIT_TASK_FAILURE
 } from './taskTypes'
-import axios from 'axios'
 
 const initialState = {
     loading: false,
@@ -28,7 +30,8 @@ const tasksReducer = (state = initialState, action) => {
         }
         case FETCH_TASKS_SUCCESS: return {
             ...state,
-            tasks: action.payload
+            tasks: action.payload,
+            details: {}
         }
         case FETCH_TASKS_FAILURE: return {
             ...state
@@ -61,6 +64,17 @@ const tasksReducer = (state = initialState, action) => {
             details: { ...action.payload }
         }
         case DETAILS_TASK_FAILURE: return {
+            ...state,
+        }
+        case EDIT_TASK_REQUEST: return {
+            ...state,
+        }
+        case EDIT_TASK_SUCCESS: return {
+            ...state,
+            tasks: state.tasks.map(task => task.id === action.payload.id ? action.payload : task),
+            details: { ...action.payload }
+        }
+        case EDIT_TASK_FAILURE: return {
             ...state,
         }
 

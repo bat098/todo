@@ -10,7 +10,10 @@ import {
     DELETE_TASK_FAILURE,
     DETAILS_TASK_REQUEST,
     DETAILS_TASK_SUCCESS,
-    DETAILS_TASK_FAILURE
+    DETAILS_TASK_FAILURE,
+    EDIT_TASK_REQUEST,
+    EDIT_TASK_SUCCESS,
+    EDIT_TASK_FAILURE
 } from './taskTypes'
 import axios from 'axios'
 import store from '../store'
@@ -97,6 +100,28 @@ export const detailsTaskFailure = (error) => {
     }
 }
 
+//#######################################
+
+export const editTaskRequest = () => {
+    return {
+        type: EDIT_TASK_REQUEST,
+    }
+}
+
+export const editTaskSuccess = (editedTask) => {
+    return {
+        type: EDIT_TASK_SUCCESS,
+        payload: editedTask
+    }
+}
+
+export const editTaskFailure = (error) => {
+    return {
+        type: EDIT_TASK_FAILURE,
+        payload: error
+    }
+}
+
 
 
 const apiUrl = 'http://139.59.215.177/todos'
@@ -159,6 +184,22 @@ export const detailsTask = (id) => {
         })
             .then(res => {
                 dispatch(detailsTaskSuccess(res.data))
+            })
+            .catch(err => console.log(err.data))
+    }
+}
+
+export const editTask = (id, editedTask) => {
+    console.log(id)
+    console.log(editedTask)
+    return (dispatch) => {
+        dispatch(editTaskRequest())
+        const token = takeToken()
+        axios.put(`${apiUrl}/${id}`, editedTask, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(res => {
+                dispatch(editTaskSuccess(res.data))
             })
             .catch(err => console.log(err.data))
     }
