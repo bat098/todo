@@ -1,40 +1,83 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
-import { detailsTask } from '../../redux/task/taskActions'
+import { detailsTask, editTask } from '../../redux/task/taskActions'
 import DeleteModal from '../deleteModal/DeleteModal'
-import Modal from 'react-modal'
-import styles from './modal.module.scss'
-
+import styles from './TodoItemsDetails.module.scss'
 
 
 const TodoItemsDetails = () => {
     const [showModal, setShowModal] = useState(false)
+    const [edit, setEdit] = useState(false)
     const dispatch = useDispatch()
+    const param = useParams()
     const itemDetails = useSelector(state => state.tasks.details)
 
-    const { id, title, description, finished } = itemDetails
-    const param = useParams()
-
+    const [form, setForm] = useState(itemDetails)
+    const { id, title, description, finished } = form
 
     useEffect(() => {
         dispatch(detailsTask(param.id))
     }, [])
 
+
+    useEffect(() => {
+        setForm(itemDetails)
+    }, [itemDetails])
+
+
+    const handleChange = (e) => {
+        const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+
+        setForm({
+            ...form,
+            [e.target.name]: value
+        })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        setEdit(false)
+        const updatedTask = {
+            title: form.title,
+            description: form.description,
+            finished: form.finished
+        }
+        dispatch(editTask(id, updatedTask))
+    }
+
+
+
     return (
-        <div>
-            <div>{id}</div>
-            <div>{title}</div>
-            <div>{description}</div>
-            <div>{finished ? 'true' : false}</div>
-            <button>Edit</button>
-            <button onClick={() => setShowModal(true)}>Delete</button>
+        <>
+            {
+                edit ? <form onSubmit={onSubmit} >
+                    <div className={styles.formGroup}>
+                        <label htmlFor="title">Title</label>
+                        <input type="text" name="title" id="title" value={title} onChange={e => handleChange(e)} />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">Description</label>
+                        <input type="description" name="description" id="description" value={description} onChange={e => handleChange(e)} />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="finished">Finished</label>
+                        <input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={e => handleChange(e)} />
+                    </div>
+                    <button type='submit'>Save Change</button>
+                </form> :
+                    <div>
 
-            <DeleteModal showModal={showModal} setShowModal={setShowModal} id={param.id} />
-
-
-        </div>
+                        <div>id:{id}</div>
+                        <div>title:{title}</div>
+                        <div>desc: {description}</div>
+                        <div>finished<input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={e => handleChange(e)} disabled /></div>
+                        <button onClick={() => setEdit(true)}>Edit</button>
+                        <button onClick={() => setShowModal(true)}>Delete</button>
+                        <DeleteModal showModal={showModal} setShowModal={setShowModal} id={param.id} />
+                    </div>
+            }
+        </>
     )
 }
 
