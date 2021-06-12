@@ -22,12 +22,7 @@ const loadFromLocalStorage = () => {
 };
 
 const persistedStore = loadFromLocalStorage();
-
 const store = createStore(rootReducer, persistedStore, composeWithDevTools(applyMiddleware(thunk)))
-
-
 store.subscribe(() => saveToLocalStorage(store.getState()))
-
-
 
 export default store
