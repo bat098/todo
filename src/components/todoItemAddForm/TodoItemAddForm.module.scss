@@ -1,0 +1,32 @@
+@import '../../golbalStyles.module.scss';
+.form {
+  margin-top: 10px;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+.input {
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4b4b4b;
+}
+.saveBtn {
+  background-color: transparent;
+  color: $primaryColor;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid $primaryColor;
+  cursor: pointer;
+}

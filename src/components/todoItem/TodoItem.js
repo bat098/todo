@@ -7,25 +7,28 @@ import DeleteModal from '../deleteModal/DeleteModal'
 
 
 const TodoItem = ({ item }) => {
-    const dispatch = useDispatch()
-    const [showModal, setShowModal] = useState(false)
+
     const { id, title, finished } = item
-    const [checkbox, setCheckbox] = useState(false)
-    const handleChange = (e) => {
-        setCheckbox(e.target.checked)
-    }
-    useEffect(() => {
-        setCheckbox(finished)
-    }, [])
+
+    const [showModal, setShowModal] = useState(false)
+
+    // const [checkbox, setCheckbox] = useState(false)
+    // const handleChange = (e) => {
+    //     setCheckbox(e.target.checked)
+    // }
+    // useEffect(() => {
+    //     setCheckbox(finished)
+    // }, [item])
     return (
         <div className={styles.todoItem}>
-            <div>{title}</div>
-            <input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={e => handleChange(e)} />
+            <div className={styles.title}>{title}</div>
+            <input type="checkbox" name="finished" id="finished" defaultChecked={finished} />
             <button onClick={() => setShowModal(true)} className={`${styles.btn} ${styles.btnDelete}`}>Delete</button>
             <Link to={`/todo/${id}`}>
                 <button className={`${styles.btn} ${styles.btnDetails}`}>Details</button>
             </Link>
             <DeleteModal showModal={showModal} setShowModal={setShowModal} id={id} />
+
         </div>
     )
 }

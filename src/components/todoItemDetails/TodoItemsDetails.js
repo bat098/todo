@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { detailsTask, editTask } from '../../redux/task/taskActions'
 import DeleteModal from '../deleteModal/DeleteModal'
 import styles from './TodoItemsDetails.module.scss'
+import { Redirect } from 'react-router-dom'
 
 
 const TodoItemsDetails = () => {
@@ -12,8 +13,9 @@ const TodoItemsDetails = () => {
     const dispatch = useDispatch()
     const param = useParams()
     const itemDetails = useSelector(state => state.tasks.details)
+    const [fireRedirect, setFireRedirect] = useState(false)
 
-    const [form, setForm] = useState(itemDetails)
+    const [form, setForm] = useState({})
     const { id, title, description, finished } = form
 
     useEffect(() => {
@@ -28,7 +30,6 @@ const TodoItemsDetails = () => {
 
     const handleChange = (e) => {
         const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-
         setForm({
             ...form,
             [e.target.name]: value
@@ -39,44 +40,46 @@ const TodoItemsDetails = () => {
         e.preventDefault()
         setEdit(false)
         const updatedTask = {
-            title: form.title,
-            description: form.description,
-            finished: form.finished
+            title,
+            description,
+            finished
         }
         dispatch(editTask(id, updatedTask))
+        // setFireRedirect(true)
     }
-
 
 
     return (
         <>
             {
-                edit ? <form onSubmit={onSubmit} >
+                edit ? <form className={styles.form} onSubmit={onSubmit} >
                     <div className={styles.formGroup}>
-                        <label htmlFor="title">Title</label>
-                        <input type="text" name="title" id="title" value={title} onChange={e => handleChange(e)} />
+                        <label className={styles.label} htmlFor="title">Title</label>
+                        <input className={styles.input} type="text" name="title" id="title" value={title} onChange={handleChange} />
                     </div>
                     <div className={styles.formGroup}>
-                        <label htmlFor="description">Description</label>
-                        <input type="description" name="description" id="description" value={description} onChange={e => handleChange(e)} />
+                        <label className={styles.label} htmlFor="description">Description</label>
+                        <input className={styles.input} type="description" name="description" id="description" value={description} onChange={handleChange} />
                     </div>
                     <div className={styles.formGroup}>
-                        <label htmlFor="finished">Finished</label>
-                        <input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={e => handleChange(e)} />
+                        <label className={styles.label} htmlFor="finished">Finished</label>
+                        <input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={handleChange} />
                     </div>
-                    <button type='submit'>Save Change</button>
+                    <button className={`${styles.btn} ${styles.btnSave}`} type='submit'>Save Change</button>
                 </form> :
-                    <div>
-
-                        <div>id:{id}</div>
-                        <div>title:{title}</div>
-                        <div>desc: {description}</div>
-                        <div>finished<input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={e => handleChange(e)} disabled /></div>
-                        <button onClick={() => setEdit(true)}>Edit</button>
-                        <button onClick={() => setShowModal(true)}>Delete</button>
+                    <div className={styles.details}>
+                        <div className={styles.title}><span className={styles.tag}>Title: </span>{title}</div>
+                        <div className={styles.description}><span className={styles.tag}>Description: </span>{description}</div>
+                        <div className={styles.finished}><span className={styles.tag}>Finished: </span><input type="checkbox" name="finished" id="finished" defaultChecked={finished} onChange={e => handleChange(e)} disabled /></div>
+                        <button className={`${styles.btn} ${styles.btnEdit}`} onClick={() => setEdit(true)}>Edit</button>
+                        <button className={`${styles.btn} ${styles.btnDelete}`} onClick={() => setShowModal(true)}>Delete</button>
                         <DeleteModal showModal={showModal} setShowModal={setShowModal} id={param.id} />
                     </div>
             }
+            {
+                fireRedirect && <Redirect to='/todo' />
+            }
+
         </>
     )
 }

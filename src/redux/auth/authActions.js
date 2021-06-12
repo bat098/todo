@@ -30,11 +30,11 @@ export const logout = () => {
 
 export const fetchLogin = (loginData) => {
 
-    const { login, password } = loginData
+    const { email, password } = loginData
     return (dispatch) => {
         dispatch(fetchLoginRequest())
         axios.post('http://139.59.215.177/auth/local', {
-            identifier: login,
+            identifier: email,
             password: password
         })
             .then(response => {

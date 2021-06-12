@@ -1,12 +1,42 @@
+@import '../../golbalStyles.module.scss';
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
-  height: 200px;
-  color: red;
-  background-color: lightcoral;
+  width: 300px;
+  height: 300px;
+  color: $errorColor;
+  background-color: $primaryBg;
   transform: translate(-50%, -50%);
   border-radius: 20px;
-  padding: 20px;
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  text-align: center;
+}
+
+p {
+  font-size: 40px;
+  width: 100%;
+}
+
+.btn {
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnClose {
+  background-color: transparent;
+  border: 2px solid $primaryColor;
+  color: $primaryColor;
+}
+
+.btnDelete {
+  background-color: $errorColor;
+  color: $secondaryColor;
 }
